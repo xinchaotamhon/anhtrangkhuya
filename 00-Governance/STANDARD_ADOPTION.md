@@ -15,15 +15,21 @@ routine_continuation_requires_vault: false
 
 ## Applied
 
-- List universal owner principles adopted without modification.
+- Human ownership of consequential tradeoffs, absolute reporting honesty and evidence-first decisions.
+- Baseline, rollback point, cumulative gates and failure-to-regression-gate workflow.
+- Stable/volatile/evidence/business-data separation and self-contained local handoff.
+- Provenance, secret protection, controlled discovery and candidate-first reusable resources.
 
 ## Specialized
 
-- Translate universal invariants into project-specific gates and workflows.
+- Personal reflections remain local by default; no backend or analytics is allowed in the first release.
+- Saved entries contain immutable question snapshots so CRUD cannot silently reinterpret history.
+- Browser storage is paired with explicit full-backup export/restore and definition-only share packages.
+- Product gates cover default content, summary logic, file formats, static PWA assets and project-memory routing.
 
 ## Waived
 
-- Record rule, reason, risk, approver, expiry and compensating control.
+- None.
 
 ## Continuation Contract
 

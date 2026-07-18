@@ -1,0 +1,9 @@
+node_modules/
+coverage/
+.codebase-memory/
+*.log
+*.local
+*.atk-backup.json
+*.atk-share.json
+.DS_Store
+Thumbs.db

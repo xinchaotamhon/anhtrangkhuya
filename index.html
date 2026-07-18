@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#17142f">
+  <meta name="description" content="Nhật ký phản tư mỗi tối, riêng tư và lưu trên thiết bị.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <title>Ánh Trăng Khuya</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script src="src/defaults.js" defer></script>
+  <script src="src/model.js" defer></script>
+  <script src="src/storage.js" defer></script>
+  <script src="src/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Đi đến nội dung chính</a>
+
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Điều hướng chính">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">☾</div>
+        <div>
+          <strong>Ánh Trăng Khuya</strong>
+          <span>Một khoảng lặng để nhìn rõ</span>
+        </div>
+      </div>
+
+      <nav class="nav-list">
+        <button class="nav-item is-active" type="button" data-view="today" aria-current="page">
+          <span aria-hidden="true">◌</span><span>Tối nay</span>
+        </button>
+        <button class="nav-item" type="button" data-view="history">
+          <span aria-hidden="true">↗</span><span>Tiến độ</span>
+        </button>
+        <button class="nav-item" type="button" data-view="questions">
+          <span aria-hidden="true">✦</span><span>Bộ câu hỏi</span>
+        </button>
+        <button class="nav-item" type="button" data-view="library">
+          <span aria-hidden="true">◇</span><span>Thư viện gợi ý</span>
+        </button>
+        <button class="nav-item" type="button" data-view="data">
+          <span aria-hidden="true">⇅</span><span>Dữ liệu & chia sẻ</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-note">
+        <span class="privacy-dot" aria-hidden="true"></span>
+        <div><strong>Riêng tư mặc định</strong><span>Câu trả lời ở lại trên thiết bị này.</span></div>
+      </div>
+    </aside>
+
+    <div class="workspace">
+      <header class="topbar">
+        <button class="mobile-menu" type="button" id="mobile-menu" aria-label="Mở menu" aria-expanded="false">☰</button>
+        <div>
+          <p class="eyebrow" id="view-eyebrow">NHẬT KÝ BUỔI TỐI</p>
+          <h1 id="view-title">Tối nay</h1>
+        </div>
+        <div class="topbar-actions">
+          <span class="storage-status" id="storage-status"><i aria-hidden="true"></i><span>Đang kiểm tra lưu trữ</span></span>
+          <button class="button button-quiet" id="install-app" type="button" hidden>Cài ứng dụng</button>
+        </div>
+      </header>
+
+      <main id="main-content" tabindex="-1">
+        <section class="view is-active" id="view-today" data-view-panel="today" aria-labelledby="view-title"></section>
+        <section class="view" id="view-history" data-view-panel="history" aria-labelledby="view-title" hidden></section>
+        <section class="view" id="view-questions" data-view-panel="questions" aria-labelledby="view-title" hidden></section>
+        <section class="view" id="view-library" data-view-panel="library" aria-labelledby="view-title" hidden></section>
+        <section class="view" id="view-data" data-view-panel="data" aria-labelledby="view-title" hidden></section>
+      </main>
+    </div>
+  </div>
+
+  <div class="loading-screen" id="loading-screen" role="status" aria-live="polite">
+    <div class="moon-loader" aria-hidden="true">☾</div>
+    <p>Đang mở khoảng lặng của bạn…</p>
+  </div>
+
+  <dialog class="dialog editor-dialog" id="editor-dialog">
+    <form method="dialog" id="editor-form">
+      <div class="dialog-header">
+        <div><p class="eyebrow" id="editor-eyebrow">CHỈNH SỬA</p><h2 id="editor-title">Nội dung</h2></div>
+        <button class="icon-button" value="cancel" type="submit" aria-label="Đóng">×</button>
+      </div>
+      <div class="dialog-body" id="editor-body"></div>
+      <div class="dialog-actions">
+        <button class="button button-quiet" value="cancel" type="submit">Hủy</button>
+        <button class="button button-primary" id="editor-save" value="default" type="submit">Lưu thay đổi</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="dialog confirm-dialog" id="confirm-dialog">
+    <form method="dialog">
+      <div class="confirm-symbol" aria-hidden="true">!</div>
+      <h2 id="confirm-title">Xác nhận</h2>
+      <p id="confirm-message"></p>
+      <div class="dialog-actions">
+        <button class="button button-quiet" value="cancel" type="submit">Quay lại</button>
+        <button class="button button-danger" value="confirm" type="submit" id="confirm-action">Xác nhận</button>
+      </div>
+    </form>
+  </dialog>
+
+  <input type="file" id="backup-file" accept="application/json,.json" hidden>
+  <input type="file" id="share-file" accept="application/json,.json" hidden>
+  <div class="toast-region" id="toast-region" aria-live="polite" aria-atomic="true"></div>
+
+  <noscript>
+    <div class="noscript">Ứng dụng cần JavaScript để lưu và hiển thị nhật ký trên thiết bị.</div>
+  </noscript>
+</body>
+</html>

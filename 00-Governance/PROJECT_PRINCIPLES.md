@@ -16,3 +16,11 @@
 - Keep routine handoff self-contained in this project and pin the global standard provenance.
 - Treat logs as diagnostics, not correctness proof.
 - Route reusable tools through candidate review instead of silently promoting them.
+
+## Domain Specialization
+
+- Reflection answers are sensitive personal data. Keep them on-device by default and never send them to a server without an explicit later decision.
+- Question edits affect future check-ins only. Saved history keeps a question snapshot so later CRUD cannot rewrite the meaning of an old answer.
+- A browser database is convenient storage, not a backup. Recovery requires a verified exported backup file kept outside the browser.
+- Share packages contain reusable definitions by default, not private nightly answers.
+- Scores are navigation aids, not psychological diagnoses or moral verdicts. Preserve the owner's notes and context alongside every summary.

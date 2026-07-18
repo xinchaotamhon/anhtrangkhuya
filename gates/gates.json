@@ -53,6 +53,32 @@
       "enabled": true,
       "introduced_by": "resource-feedback-loop",
       "invariant": "Project resource use and reusable discoveries survive handoff"
+    },
+    {
+      "id": "app.model-contract",
+      "description": "Reflection scoring, immutable snapshots and backup/share formats preserve their contracts",
+      "tier": "smoke",
+      "command": ["node", "--test", "tests/model.test.js"],
+      "cwd": ".",
+      "timeout_seconds": 30,
+      "expected_exit_code": 0,
+      "required": true,
+      "enabled": true,
+      "introduced_by": "local-first-reflection-mvp",
+      "invariant": "History remains interpretable and definition sharing never includes private nightly entries"
+    },
+    {
+      "id": "app.static-pwa-contract",
+      "description": "Static PWA assets, default content, security boundary and mobile layout remain deployable",
+      "tier": "smoke",
+      "command": ["node", "tools/check_static_app.mjs"],
+      "cwd": ".",
+      "timeout_seconds": 30,
+      "expected_exit_code": 0,
+      "required": true,
+      "enabled": true,
+      "introduced_by": "local-first-reflection-mvp",
+      "invariant": "The dependency-free app contains all owner questions, loads offline assets and does not cover mobile questions with its save action"
     }
   ]
 }

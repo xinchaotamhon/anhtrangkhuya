@@ -1,4 +1,25 @@
 {
   "schema_version": 1,
-  "resources": []
+  "resources": [
+    {
+      "capability_id": "project.bootstrap",
+      "resource": "tools/vault.py",
+      "source": "D:/mydata/my-project/00-AI-Resource-Vault",
+      "pinned_version": "1.1.1",
+      "pinned_commit": "260eeb53f9275056dac42ad4c34515b5340f63fc",
+      "integration": "Local project-memory foundation and self-contained START_HERE routing",
+      "constraints": "Routine continuation must not require Vault availability",
+      "verification_gate": "foundation.memory-routing"
+    },
+    {
+      "capability_id": "gate.cumulative-execution",
+      "resource": "20-First-Party/project-standard/tools/run_gates.py",
+      "source": "D:/mydata/my-project/00-AI-Resource-Vault",
+      "pinned_version": "1.1.1",
+      "pinned_commit": "260eeb53f9275056dac42ad4c34515b5340f63fc",
+      "integration": "tools/run_gates.py and gates/gates.json",
+      "constraints": "Commands are argument arrays and higher tiers remain cumulative",
+      "verification_gate": "foundation.resource-records"
+    }
+  ]
 }
