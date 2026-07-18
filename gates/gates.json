@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "project": "anh-trang-khuya",
+  "gates": [
+    {
+      "id": "foundation.start-here-exists",
+      "description": "Stable project entry point exists",
+      "tier": "smoke",
+      "command": ["{python}", "-c", "from pathlib import Path; assert Path('START_HERE.md').is_file()"],
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "expected_exit_code": 0,
+      "required": true,
+      "enabled": true,
+      "introduced_by": "project-bootstrap",
+      "invariant": "Every new session has one stable entry point"
+    },
+    {
+      "id": "foundation.memory-routing",
+      "description": "Local START_HERE links and memory placement are auditable without Vault access",
+      "tier": "smoke",
+      "command": ["{python}", "tools/audit_project_memory.py", "."],
+      "cwd": ".",
+      "timeout_seconds": 30,
+      "expected_exit_code": 0,
+      "required": true,
+      "enabled": true,
+      "introduced_by": "self-contained-project-handoff",
+      "invariant": "Routine continuation is recoverable from local project memory"
+    },
+    {
+      "id": "foundation.standard-adoption",
+      "description": "Standard provenance is pinned while routine continuation remains local",
+      "tier": "smoke",
+      "command": ["{python}", "-c", "from pathlib import Path; p=Path('00-Governance/STANDARD_ADOPTION.md').read_text(encoding='utf-8'); required=['standard_version:','vault_version:','vault_commit:','standard_entry_sha256:','routine_continuation_requires_vault: false']; assert all(x in p for x in required); assert 'UNSET' not in p and 'YYYY-MM-DD' not in p"],
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "expected_exit_code": 0,
+      "required": true,
+      "enabled": true,
+      "introduced_by": "self-contained-project-handoff",
+      "invariant": "Project standard adoption is traceable but not a runtime dependency"
+    },
+    {
+      "id": "foundation.resource-records",
+      "description": "Adopted resources and reusable candidates have valid local schemas",
+      "tier": "smoke",
+      "command": ["{python}", "-c", "import json; from pathlib import Path; a=json.loads(Path('10-Resources/RESOURCE_ADOPTIONS.json').read_text(encoding='utf-8')); c=json.loads(Path('40-State/RESOURCE_CANDIDATES.json').read_text(encoding='utf-8')); assert a.get('schema_version')==1 and isinstance(a.get('resources'),list); assert c.get('schema_version')==1 and isinstance(c.get('candidates'),list)"],
+      "cwd": ".",
+      "timeout_seconds": 10,
+      "expected_exit_code": 0,
+      "required": true,
+      "enabled": true,
+      "introduced_by": "resource-feedback-loop",
+      "invariant": "Project resource use and reusable discoveries survive handoff"
+    }
+  ]
+}
