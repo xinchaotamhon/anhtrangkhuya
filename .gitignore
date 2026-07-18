@@ -2,6 +2,8 @@ node_modules/
 coverage/
 .codebase-memory/
 *.log
+!50-Evidence/gate-logs/
+!50-Evidence/gate-logs/**/*.log
 *.local
 *.atk-backup.json
 *.atk-share.json

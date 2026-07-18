@@ -1,0 +1,11 @@
+gate: foundation.memory-routing
+command: C:\Users\vhiep\AppData\Local\Programs\Python\Python314\python.exe tools/audit_project_memory.py .
+cwd: D:\mydata\my-project\AnhTrangKhuya
+expected_exit_code: 0
+observed_exit_code: 0
+timed_out: false
+
+[stdout]
+INFO: Scanned 19 Markdown files
+
+[stderr]
