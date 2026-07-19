@@ -1,0 +1,11 @@
+gate: app.deploy-bundle-contract
+command: node tools/check_deploy_bundle.mjs
+cwd: D:\mydata\my-project\AnhTrangKhuya
+expected_exit_code: 0
+observed_exit_code: 0
+timed_out: false
+
+[stdout]
+Deployment boundary passed: 10 allowlisted runtime assets only.
+
+[stderr]

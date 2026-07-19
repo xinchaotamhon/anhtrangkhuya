@@ -1,0 +1,19 @@
+{
+  "observed_at": "2026-07-19T10:05:59.069Z",
+  "environment": "Headless Chrome, isolated temporary profile, local static server",
+  "expected": "App ready; Escape/Hủy/× close an invalid editor; conditional follow-up, save/history, question CRUD, library CRUD and private-data share boundary work",
+  "observed": {
+    "ready": true,
+    "escapeClosesEditor": true,
+    "conditionalFollowUp": true,
+    "entrySaved": true,
+    "historyVisible": true,
+    "questionCancelWithoutInput": true,
+    "questionCrud": true,
+    "libraryCancelWithoutInput": true,
+    "libraryCrud": true,
+    "shareExcludesPrivateEntries": true,
+    "passed": true
+  },
+  "verdict": "pass"
+}

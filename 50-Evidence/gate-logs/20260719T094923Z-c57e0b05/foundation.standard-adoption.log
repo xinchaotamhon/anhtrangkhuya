@@ -1,0 +1,10 @@
+gate: foundation.standard-adoption
+command: C:\Users\vhiep\AppData\Local\Programs\Python\Python314\python.exe -c "from pathlib import Path; p=Path('00-Governance/STANDARD_ADOPTION.md').read_text(encoding='utf-8'); required=['standard_version:','vault_version:','vault_commit:','standard_entry_sha256:','routine_continuation_requires_vault: false']; assert all(x in p for x in required); assert 'UNSET' not in p and 'YYYY-MM-DD' not in p"
+cwd: D:\mydata\my-project\AnhTrangKhuya
+expected_exit_code: 0
+observed_exit_code: 0
+timed_out: false
+
+[stdout]
+
+[stderr]

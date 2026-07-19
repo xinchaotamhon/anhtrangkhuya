@@ -1,0 +1,10 @@
+gate: foundation.start-here-exists
+command: C:\Users\vhiep\AppData\Local\Programs\Python\Python314\python.exe -c "from pathlib import Path; assert Path('START_HERE.md').is_file()"
+cwd: D:\mydata\my-project\AnhTrangKhuya
+expected_exit_code: 0
+observed_exit_code: 0
+timed_out: false
+
+[stdout]
+
+[stderr]

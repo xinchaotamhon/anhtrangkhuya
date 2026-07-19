@@ -31,16 +31,53 @@ await new Promise((resolve, reject) => {
 });
 function call(method, params = {}) {
   const id = nextId++;
-  socket.send(JSON.stringify({ id, method, params }));
-  return new Promise((resolve, reject) => pending.set(id, { resolve, reject }));
+  return new Promise((resolve, reject) => {
+    const timeout = setTimeout(() => {
+      pending.delete(id);
+      reject(new Error(`Chrome DevTools timed out: ${method}`));
+    }, 10000);
+    pending.set(id, {
+      resolve: (value) => { clearTimeout(timeout); resolve(value); },
+      reject: (error) => { clearTimeout(timeout); reject(error); }
+    });
+    socket.send(JSON.stringify({ id, method, params }));
+  });
 }
 
 await call("Runtime.enable");
 await new Promise((resolve) => setTimeout(resolve, 2500));
+
+const escapeSetup = await call("Runtime.evaluate", {
+  expression: `(async () => {
+    document.querySelector('[data-view="questions"]').click();
+    await new Promise((resolve) => setTimeout(resolve, 100));
+    document.querySelector('[data-add-question]').click();
+    return document.querySelector('#editor-dialog').open;
+  })()`,
+  awaitPromise: true,
+  returnByValue: true
+});
+if (!escapeSetup.result.value) throw new Error("Editor did not open for Escape smoke check.");
+await call("Input.dispatchKeyEvent", { type: "keyDown", key: "Escape", code: "Escape", windowsVirtualKeyCode: 27 });
+await call("Input.dispatchKeyEvent", { type: "keyUp", key: "Escape", code: "Escape", windowsVirtualKeyCode: 27 });
+await new Promise((resolve) => setTimeout(resolve, 100));
+const escapeCheck = await call("Runtime.evaluate", {
+  expression: `(() => {
+    globalThis.__atkSmokeEscapeClosed = !document.querySelector('#editor-dialog').open;
+    document.querySelector('[data-view="today"]').click();
+    return globalThis.__atkSmokeEscapeClosed;
+  })()`,
+  returnByValue: true
+});
+if (!escapeCheck.result.value) throw new Error("Escape did not close the editor.");
+
 const evaluated = await call("Runtime.evaluate", {
   expression: `(async () => {
     const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-    const result = { ready: document.documentElement.dataset.appState === 'ready' };
+    const result = {
+      ready: document.documentElement.dataset.appState === 'ready',
+      escapeClosesEditor: globalThis.__atkSmokeEscapeClosed === true
+    };
 
     const card = document.querySelector('[data-question-id="q-arrogance"]');
     const yes = card?.querySelector('input[data-main-answer][value="yes"]');
@@ -67,6 +104,11 @@ const evaluated = await call("Runtime.evaluate", {
 
     document.querySelector('[data-view="questions"]').click();
     document.querySelector('[data-add-question]').click();
+    const questionFormWasInvalid = !document.querySelector('#editor-form').checkValidity();
+    document.querySelector('#editor-dialog [data-editor-cancel]:not(.icon-button)').click();
+    await sleep(100);
+    result.questionCancelWithoutInput = questionFormWasInvalid && !document.querySelector('#editor-dialog').open;
+    document.querySelector('[data-add-question]').click();
     document.querySelector('#question-prompt').value = 'Browser smoke question?';
     document.querySelector('#question-category').value = 'Browser smoke';
     document.querySelector('#editor-form').requestSubmit(document.querySelector('#editor-save'));
@@ -75,6 +117,11 @@ const evaluated = await call("Runtime.evaluate", {
     result.questionCrud = questions.some((question) => question.prompt === 'Browser smoke question?');
 
     document.querySelector('[data-view="library"]').click();
+    document.querySelector('[data-add-library]').click();
+    const libraryFormWasInvalid = !document.querySelector('#editor-form').checkValidity();
+    document.querySelector('#editor-dialog [data-editor-cancel].icon-button').click();
+    await sleep(100);
+    result.libraryCancelWithoutInput = libraryFormWasInvalid && !document.querySelector('#editor-dialog').open;
     document.querySelector('[data-add-library]').click();
     document.querySelector('#library-label').value = 'Browser smoke emotion';
     document.querySelector('#library-definition').value = 'A temporary browser smoke definition.';
@@ -98,7 +145,7 @@ if (!observed || !observed.passed) throw new Error(`Browser smoke failed: ${JSON
 const evidence = {
   observed_at: new Date().toISOString(),
   environment: "Headless Chrome, isolated temporary profile, local static server",
-  expected: "App ready; conditional follow-up, save/history, question CRUD, library CRUD and private-data share boundary work",
+  expected: "App ready; Escape/Hủy/× close an invalid editor; conditional follow-up, save/history, question CRUD, library CRUD and private-data share boundary work",
   observed,
   verdict: "pass"
 };

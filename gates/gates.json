@@ -79,6 +79,45 @@
       "enabled": true,
       "introduced_by": "local-first-reflection-mvp",
       "invariant": "The dependency-free app contains all owner questions, loads offline assets and does not cover mobile questions with its save action"
+    },
+    {
+      "id": "app.vietnamese-font-contract",
+      "description": "Vietnamese UI text uses NFC and a serif font stack with Vietnamese glyph coverage",
+      "tier": "smoke",
+      "command": ["node", "tools/check_vietnamese_font.mjs"],
+      "cwd": ".",
+      "timeout_seconds": 30,
+      "expected_exit_code": 0,
+      "required": true,
+      "enabled": true,
+      "introduced_by": "production-font-rendering-incident-20260719",
+      "invariant": "Vietnamese headings render as complete graphemes instead of splitting into fallback-font fragments"
+    },
+    {
+      "id": "app.deploy-bundle-contract",
+      "description": "Cloudflare deployment contains only the reviewed public runtime assets",
+      "tier": "smoke",
+      "command": ["node", "tools/check_deploy_bundle.mjs"],
+      "cwd": ".",
+      "timeout_seconds": 30,
+      "expected_exit_code": 0,
+      "required": true,
+      "enabled": true,
+      "introduced_by": "production-root-exposure-incident-20260719",
+      "invariant": "Project memory, evidence, tests and personal screenshots are never included in the public Worker bundle"
+    },
+    {
+      "id": "app.editor-cancel-contract",
+      "description": "Editor close controls cancel without validating required fields",
+      "tier": "smoke",
+      "command": ["node", "tools/check_editor_cancel.mjs"],
+      "cwd": ".",
+      "timeout_seconds": 30,
+      "expected_exit_code": 0,
+      "required": true,
+      "enabled": true,
+      "introduced_by": "library-editor-cancel-incident-20260719",
+      "invariant": "A user can abandon adding an emotion, imagery item or question without entering required data"
     }
   ]
 }

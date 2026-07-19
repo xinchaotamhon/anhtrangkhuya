@@ -36,8 +36,17 @@ await new Promise((resolve, reject) => {
 
 function call(method, params = {}) {
   const id = nextId++;
-  socket.send(JSON.stringify({ id, method, params }));
-  return new Promise((resolve, reject) => pending.set(id, { resolve, reject }));
+  return new Promise((resolve, reject) => {
+    const timeout = setTimeout(() => {
+      pending.delete(id);
+      reject(new Error(`Chrome DevTools timed out: ${method}`));
+    }, 10000);
+    pending.set(id, {
+      resolve: (value) => { clearTimeout(timeout); resolve(value); },
+      reject: (error) => { clearTimeout(timeout); reject(error); }
+    });
+    socket.send(JSON.stringify({ id, method, params }));
+  });
 }
 
 await call("Page.enable");

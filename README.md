@@ -25,6 +25,14 @@ Gate tích lũy của dự án:
 python tools/run_gates.py --tier smoke
 ```
 
+## Đóng gói bản công khai
+
+```powershell
+node tools/build_deploy.mjs
+```
+
+Lệnh này tạo `dist/` chỉ gồm 10 tệp cần để chạy ứng dụng. Chỉ triển khai `dist/`; không kéo-thả hoặc phát hành nguyên folder dự án vì folder gốc còn có tài liệu nội bộ, test và bằng chứng chẩn đoán.
+
 ## Dữ liệu
 
 - `.atk-backup.json`: bản sao lưu đầy đủ, có dữ liệu riêng tư.
@@ -34,6 +42,6 @@ Chi tiết hợp đồng file ở [docs/SHARE_FORMAT.md](docs/SHARE_FORMAT.md). 
 
 ## Triển khai
 
-Đây là website tĩnh; có thể đưa nguyên repository lên Cloudflare Pages, GitHub Pages hoặc một static host tương đương mà không cần build command. Thư mục output là root repository. HTTPS là bắt buộc để service worker và trải nghiệm cài app hoạt động đầy đủ.
+Production hiện dùng Cloudflare Workers Static Assets với Worker `anhtrangkhuya`. Cấu hình được ghim trong `wrangler.jsonc`; thư mục output duy nhất là `dist/`. Có thể nối Worker với một GitHub/GitLab repository riêng tư để mỗi lần push tự build và deploy, hoặc chạy Wrangler thủ công. HTTPS là bắt buộc để service worker và trải nghiệm cài app hoạt động đầy đủ.
 
 Hướng dẫn không kỹ thuật hơn nằm ở [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).

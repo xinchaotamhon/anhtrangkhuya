@@ -1,0 +1,11 @@
+gate: app.vietnamese-font-contract
+command: node tools/check_vietnamese_font.mjs
+cwd: D:\mydata\my-project\AnhTrangKhuya
+expected_exit_code: 0
+observed_exit_code: 0
+timed_out: false
+
+[stdout]
+Vietnamese font contract passed: supported serif stack and NFC text are present.
+
+[stderr]

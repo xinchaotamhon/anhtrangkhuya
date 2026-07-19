@@ -631,6 +631,7 @@
     const button = event.target.closest("button");
     if (!button) return;
     try {
+      if (button.hasAttribute("data-editor-cancel")) return $("#editor-dialog").close("cancel");
       if (button.dataset.view) return setView(button.dataset.view);
       if (button.hasAttribute("data-go-today")) return setView("today");
       if (button.hasAttribute("data-reload-app")) return location.reload();
@@ -762,13 +763,9 @@
   });
   $("#editor-form").addEventListener("submit", async (event) => {
     event.preventDefault();
-    if (event.submitter && event.submitter.value === "cancel") {
-      $("#editor-dialog").close();
-      state.editor = null;
-      return;
-    }
     try { await saveEditor(); } catch (error) { toast(error.message, "error"); }
   });
+  $("#editor-dialog").addEventListener("close", () => { state.editor = null; });
   global.addEventListener("beforeinstallprompt", (event) => {
     event.preventDefault();
     state.installPrompt = event;

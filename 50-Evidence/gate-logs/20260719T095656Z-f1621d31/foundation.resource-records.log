@@ -1,0 +1,10 @@
+gate: foundation.resource-records
+command: C:\Users\vhiep\AppData\Local\Programs\Python\Python314\python.exe -c "import json; from pathlib import Path; a=json.loads(Path('10-Resources/RESOURCE_ADOPTIONS.json').read_text(encoding='utf-8')); c=json.loads(Path('40-State/RESOURCE_CANDIDATES.json').read_text(encoding='utf-8')); assert a.get('schema_version')==1 and isinstance(a.get('resources'),list); assert c.get('schema_version')==1 and isinstance(c.get('candidates'),list)"
+cwd: D:\mydata\my-project\AnhTrangKhuya
+expected_exit_code: 0
+observed_exit_code: 0
+timed_out: false
+
+[stdout]
+
+[stderr]

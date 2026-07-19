@@ -11,6 +11,24 @@ test("default set preserves all owner-supplied main questions", () => {
   assert.ok(Defaults.DEFAULT_QUESTIONS.some((question) => question.followUps.length > 0));
 });
 
+test("default suggestion library has usable, unique items for both kinds", () => {
+  const supportedKinds = new Set(["emotion", "imagery"]);
+  const itemIds = Defaults.DEFAULT_LIBRARY_ITEMS.map((item) => item.id);
+  assert.equal(new Set(itemIds).size, itemIds.length);
+  assert.ok(Defaults.DEFAULT_LIBRARY_ITEMS.every((item) => (
+    supportedKinds.has(item.kind)
+    && Number.isInteger(item.order)
+    && item.label
+    && item.definition
+    && item.prompt
+  )));
+  for (const kind of supportedKinds) {
+    const items = Defaults.DEFAULT_LIBRARY_ITEMS.filter((item) => item.kind === kind);
+    assert.ok(items.length > 0, `default library must include ${kind} suggestions`);
+    assert.equal(new Set(items.map((item) => item.order)).size, items.length);
+  }
+});
+
 test("evaluation supports opposite scoring directions", () => {
   assert.equal(Model.evaluateBoolean("yes", "yes"), "positive");
   assert.equal(Model.evaluateBoolean("no", "yes"), "needs_improvement");

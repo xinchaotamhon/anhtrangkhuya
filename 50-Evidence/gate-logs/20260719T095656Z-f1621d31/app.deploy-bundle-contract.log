@@ -1,0 +1,28 @@
+gate: app.deploy-bundle-contract
+command: node tools/check_deploy_bundle.mjs
+cwd: D:\mydata\my-project\AnhTrangKhuya
+expected_exit_code: 0
+observed_exit_code: 1
+timed_out: false
+
+[stdout]
+
+[stderr]
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: wrangler.jsonc must pin the Worker deployment boundary
+    at file:///D:/mydata/my-project/AnhTrangKhuya/tools/check_deploy_bundle.mjs:19:8
+    at ModuleJob.run (node:internal/modules/esm/module_job:413:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:660:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.12.0

@@ -1,0 +1,11 @@
+gate: app.static-pwa-contract
+command: node tools/check_static_app.mjs
+cwd: D:\mydata\my-project\AnhTrangKhuya
+expected_exit_code: 0
+observed_exit_code: 0
+timed_out: false
+
+[stdout]
+Static contract passed: 18 questions, 32 suggestions.
+
+[stderr]

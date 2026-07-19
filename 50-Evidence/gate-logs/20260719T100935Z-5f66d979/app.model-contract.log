@@ -1,0 +1,27 @@
+gate: app.model-contract
+command: node --test tests/model.test.js
+cwd: D:\mydata\my-project\AnhTrangKhuya
+expected_exit_code: 0
+observed_exit_code: 0
+timed_out: false
+
+[stdout]
+✔ default set preserves all owner-supplied main questions (1.034ms)
+✔ default suggestion library has usable, unique items for both kinds (0.2287ms)
+✔ evaluation supports opposite scoring directions (0.2971ms)
+✔ a neutral main answer can be evaluated by a nested boolean follow-up (2.0232ms)
+✔ saved entry snapshots do not change when definitions are edited later (2.2547ms)
+✔ summary reports completion and assessed direction (1.0031ms)
+✔ backup validator accepts complete backup and rejects a share package (0.5246ms)
+✔ share package never includes nightly entries (0.3095ms)
+✔ safe merge preserves conflicting local definitions as separate copies (2.7196ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 143.5277
+
+[stderr]

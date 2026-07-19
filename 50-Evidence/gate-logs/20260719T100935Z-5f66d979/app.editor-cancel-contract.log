@@ -1,0 +1,11 @@
+gate: app.editor-cancel-contract
+command: node tools/check_editor_cancel.mjs
+cwd: D:\mydata\my-project\AnhTrangKhuya
+expected_exit_code: 0
+observed_exit_code: 0
+timed_out: false
+
+[stdout]
+Editor cancel contract passed: close controls bypass required-field validation.
+
+[stderr]

@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_NAME = "anh-trang-khuya-v1";
+const CACHE_NAME = "anh-trang-khuya-v2-vietnamese-font";
 const APP_SHELL = [
   "./",
   "./index.html",
